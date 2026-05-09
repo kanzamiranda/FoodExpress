@@ -1,0 +1,52 @@
+<nav class="navbar" [class.scrolled]="scrolled()" [class.transparent-nav]="transparent && !scrolled()">
+  <div class="nav-container">
+    <!-- Logo -->
+    <a routerLink="/" class="nav-logo" (click)="closeMobile()">
+      <span class="logo-icon">🍔</span>
+      <span class="logo-text">Food<span class="logo-accent">Express</span></span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <ul class="nav-links">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">Início</a></li>
+      <li><a routerLink="/menu" routerLinkActive="active" class="nav-link">Cardápio</a></li>
+      <li><a href="#features" class="nav-link">Funcionalidades</a></li>
+      <li><a href="#contact" class="nav-link">Contacto</a></li>
+    </ul>
+
+    <!-- Desktop Actions -->
+    <div class="nav-actions">
+      <a routerLink="/menu" class="cart-btn" id="navbar-cart-btn">
+        <lucide-icon name="shopping-cart" [size]="20"></lucide-icon>
+        @if (cartService.totalItems() > 0) {
+          <span class="cart-badge">{{ cartService.totalItems() }}</span>
+        }
+      </a>
+      <button class="btn-outline" id="navbar-login-btn">Entrar</button>
+      <button class="btn-primary" id="navbar-register-btn">Registar</button>
+    </div>
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" (click)="toggleMobile()" id="navbar-mobile-toggle" aria-label="Menu">
+      @if (!mobileOpen()) {
+        <lucide-icon name="menu" [size]="24"></lucide-icon>
+      } @else {
+        <lucide-icon name="x" [size]="24"></lucide-icon>
+      }
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (mobileOpen()) {
+    <div class="mobile-menu">
+      <a routerLink="/" class="mobile-link" (click)="closeMobile()">🏠 Início</a>
+      <a routerLink="/menu" class="mobile-link" (click)="closeMobile()">🍽️ Cardápio</a>
+      <a href="#features" class="mobile-link" (click)="closeMobile()">⭐ Funcionalidades</a>
+      <a href="#contact" class="mobile-link" (click)="closeMobile()">📞 Contacto</a>
+      <div class="mobile-actions">
+        <button class="btn-outline w-full" (click)="closeMobile()">Entrar</button>
+        <button class="btn-primary w-full" (click)="closeMobile()">Registar</button>
+      </div>
+    </div>
+  }
+</nav>

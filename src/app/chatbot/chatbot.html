@@ -1,0 +1,116 @@
+<!-- FoodBot Floating Chat Widget -->
+<div class="foodbot-wrapper">
+
+  <!-- Toggle Button -->
+  <button
+    id="foodbot-toggle"
+    class="foodbot-toggle"
+    (click)="toggleChat()"
+    [attr.aria-label]="isOpen() ? 'Fechar chat' : 'Abrir FoodBot'"
+    [class.is-open]="isOpen()"
+  >
+    <span class="toggle-icon" [class.hidden]="isOpen()">
+      <lucide-icon name="smartphone" [size]="28"></lucide-icon>
+    </span>
+    <span class="toggle-icon" [class.hidden]="!isOpen()">
+      <lucide-icon name="x" [size]="24"></lucide-icon>
+    </span>
+    @if (hasUnread() && !isOpen()) {
+      <span class="unread-badge">1</span>
+    }
+  </button>
+
+  <!-- Chat Window -->
+  @if (isOpen()) {
+    <div class="chat-window" id="foodbot-chat-window">
+
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="header-avatar">
+          <lucide-icon name="user" [size]="22" color="white"></lucide-icon>
+          <span class="online-dot"></span>
+        </div>
+        <div class="header-info">
+          <h2 class="header-title">FoodBot</h2>
+          <p class="header-subtitle">FoodExpress • Online</p>
+        </div>
+        <div class="header-flags">
+          <span class="lang-flag" [class.active]="currentLang() === 'pt'" title="Português">🇵🇹</span>
+          <span class="lang-flag" [class.active]="currentLang() === 'en'" title="English">🇬🇧</span>
+          <span class="lang-flag" [class.active]="currentLang() === 'fr'" title="Français">🇫🇷</span>
+        </div>
+        <button class="close-btn" (click)="closeChat()" aria-label="Fechar chat">
+          <lucide-icon name="x" [size]="18"></lucide-icon>
+        </button>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="messages-area" #messagesContainer id="foodbot-messages">
+        @for (msg of messages(); track msg.id) {
+          <div class="message-row" [class.user-row]="msg.sender === 'user'">
+            @if (msg.sender === 'bot') {
+              <div class="bot-avatar-small">
+                <lucide-icon name="smartphone" [size]="14" color="white"></lucide-icon>
+              </div>
+            }
+            <div class="message-bubble" [class.bot-bubble]="msg.sender === 'bot'" [class.user-bubble]="msg.sender === 'user'">
+              <p class="message-text" [innerHTML]="formatText(msg.text)"></p>
+              <span class="message-time">{{ formatTime(msg.timestamp) }}</span>
+            </div>
+          </div>
+        }
+
+        <!-- Typing indicator -->
+        @if (isTyping()) {
+          <div class="message-row">
+            <div class="bot-avatar-small">
+              <lucide-icon name="smartphone" [size]="14" color="white"></lucide-icon>
+            </div>
+            <div class="message-bubble bot-bubble typing-bubble">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Quick Replies -->
+      <div class="quick-replies" id="foodbot-quick-replies">
+        @for (reply of currentQuickReplies; track reply.label) {
+          <button class="quick-reply-btn" (click)="sendQuickReply(reply)">
+            {{ reply.label }}
+          </button>
+        }
+      </div>
+
+      <!-- Input Area -->
+      <div class="input-area">
+        <div class="input-wrapper">
+          <input
+            #inputField
+            id="foodbot-input"
+            type="text"
+            class="chat-input"
+            [value]="userInput()"
+            (input)="onInputChange($any($event.target).value)"
+            (keydown)="onKeyDown($event)"
+            placeholder="{{ currentLang() === 'pt' ? 'Escreva uma mensagem...' : currentLang() === 'en' ? 'Type a message...' : 'Écrivez un message...' }}"
+            autocomplete="off"
+          />
+          <button
+            id="foodbot-send"
+            class="send-btn"
+            (click)="sendMessage()"
+            [disabled]="!userInput().trim()"
+            aria-label="Enviar mensagem"
+          >
+            <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
+          </button>
+        </div>
+        <p class="powered-by">Powered by FoodExpress AI ✨</p>
+      </div>
+
+    </div>
+  }
+</div>

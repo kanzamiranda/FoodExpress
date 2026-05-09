@@ -1,0 +1,237 @@
+<app-navbar [transparent]="true" />
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-badge">🔥 Delivery disponível agora</div>
+      <h1 class="hero-title">
+        A comida que<br>
+        <span class="hero-title-accent">você ama,</span><br>
+        na sua porta.
+      </h1>
+      <p class="hero-subtitle">
+        Descubra centenas de pratos deliciosos e receba em casa em menos de 45 minutos.
+        Rápido, fácil e saboroso!
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/menu" class="btn-hero-primary" id="hero-order-now">
+          <lucide-icon name="shopping-cart" [size]="18" style="margin-right: 8px;"></lucide-icon>
+          Pedir Agora
+        </a>
+        <a href="#how-it-works" class="btn-hero-secondary" id="hero-learn-more">
+          Como Funciona
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <span class="avatar">👩</span>
+          <span class="avatar">👨</span>
+          <span class="avatar">👩‍🦱</span>
+          <span class="avatar">👱</span>
+        </div>
+        <p class="trust-text"><strong>+50.000</strong> clientes satisfeitos</p>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card main-card">
+        <span class="hero-card-emoji">🍕</span>
+        <div class="hero-card-info">
+          <p class="hero-card-name">Pizza Margherita</p>
+          <p class="hero-card-price">€12,50</p>
+        </div>
+        <span class="hero-card-rating">⭐ 4.9</span>
+      </div>
+      <div class="hero-card side-card card-left">
+        <span>🍔</span>
+        <div>
+          <p>Classic Burger</p>
+          <p>€9,90</p>
+        </div>
+      </div>
+      <div class="hero-card side-card card-right">
+        <span>🍜</span>
+        <div>
+          <p>Pasta Carbonara</p>
+          <p>€11,00</p>
+        </div>
+      </div>
+      <div class="delivery-badge">
+        <span>🛵</span>
+        <div>
+          <p class="badge-label">Entrega em</p>
+          <p class="badge-time">30 min</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats-section">
+  <div class="stats-container">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-card">
+        <p class="stat-value">{{ stat.value }}</p>
+        <p class="stat-label">{{ stat.label }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="section categories-section" id="categories">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Categorias</span>
+      <h2 class="section-title">Explore o nosso Cardápio</h2>
+      <p class="section-subtitle">Escolha entre centenas de pratos de diferentes categorias</p>
+    </div>
+    <div class="categories-grid">
+      @for (cat of categories; track cat.name) {
+        <a routerLink="/menu" class="category-card" [id]="'cat-' + cat.name.toLowerCase()">
+          <div class="cat-icon-wrap">
+            <span class="cat-icon">{{ cat.icon }}</span>
+          </div>
+          <p class="cat-name">{{ cat.name }}</p>
+          <p class="cat-count">{{ cat.count }} pratos</p>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section how-section" id="how-it-works">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Como Funciona</span>
+      <h2 class="section-title">3 passos simples</h2>
+      <p class="section-subtitle">Pedir comida nunca foi tão fácil</p>
+    </div>
+    <div class="steps-grid">
+      @for (s of steps; track s.step) {
+        <div class="step-card">
+          <div class="step-number">{{ s.step }}</div>
+          <div class="step-icon">
+            <lucide-icon [name]="s.icon" [size]="40"></lucide-icon>
+          </div>
+          <h3 class="step-title">{{ s.title }}</h3>
+          <p class="step-desc">{{ s.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="section features-section" id="features">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Vantagens</span>
+      <h2 class="section-title">Por que escolher o FoodExpress?</h2>
+    </div>
+    <div class="features-grid">
+      @for (f of features; track f.title) {
+        <div class="feature-card" [style.--accent]="f.color">
+          <div class="feature-icon-wrap">
+            <lucide-icon [name]="f.icon" [size]="26" [style.color]="f.color"></lucide-icon>
+          </div>
+          <h3 class="feature-title">{{ f.title }}</h3>
+          <p class="feature-desc">{{ f.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section testimonials-section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Testemunhos</span>
+      <h2 class="section-title">O que dizem os nossos clientes</h2>
+    </div>
+    <div class="testimonials-grid">
+      @for (t of testimonials; track t.name) {
+        <div class="testimonial-card">
+          <div class="stars">
+            @for (s of [1,2,3,4,5]; track s) {
+              <span>⭐</span>
+            }
+          </div>
+          <p class="testimonial-text">"{{ t.text }}"</p>
+          <div class="testimonial-author">
+            <span class="testimonial-avatar">{{ t.avatar }}</span>
+            <div>
+              <p class="author-name">{{ t.name }}</p>
+              <p class="author-role">{{ t.role }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<section class="cta-section">
+  <div class="cta-container">
+    <div class="cta-content">
+      <h2 class="cta-title">Pronto para pedir?</h2>
+      <p class="cta-subtitle">Registe-se agora e ganhe 15% de desconto na sua primeira encomenda!</p>
+      <div class="cta-actions">
+        <a routerLink="/menu" class="btn-cta-primary" id="cta-menu-btn">Ver Cardápio</a>
+        <button class="btn-cta-secondary" id="cta-register-btn">Criar Conta Grátis</button>
+      </div>
+    </div>
+    <div class="cta-emoji-cloud">
+      <span>🍕</span><span>🍔</span><span>🍜</span>
+      <span>🥗</span><span>🍰</span><span>🥤</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="contact">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="footer-logo">🍔 Food<span>Express</span></div>
+      <p class="footer-tagline">A sua plataforma de delivery favorita. Rápido, fácil e delicioso.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link"><lucide-icon name="facebook" [size]="20"></lucide-icon></a>
+        <a href="#" class="social-link"><lucide-icon name="instagram" [size]="20"></lucide-icon></a>
+        <a href="#" class="social-link"><lucide-icon name="twitter" [size]="20"></lucide-icon></a>
+      </div>
+    </div>
+    <div class="footer-links-group">
+      <h4>Plataforma</h4>
+      <a routerLink="/menu">Cardápio</a>
+      <a href="#">Como Funciona</a>
+      <a href="#">Promoções</a>
+      <a href="#">App Mobile</a>
+    </div>
+    <div class="footer-links-group">
+      <h4>Suporte</h4>
+      <a href="#">Central de Ajuda</a>
+      <a href="#">Contacto</a>
+      <a href="#">Reclamações</a>
+      <a href="#">Política de Privacidade</a>
+    </div>
+    <div class="footer-links-group">
+      <h4>Contacto</h4>
+      <p><lucide-icon name="mail" [size]="14" style="margin-right: 8px;"></lucide-icon> suporte&#64;foodexpress.pt</p>
+      <p><lucide-icon name="phone" [size]="14" style="margin-right: 8px;"></lucide-icon> +351 210 000 000</p>
+      <p><lucide-icon name="clock" [size]="14" style="margin-right: 8px;"></lucide-icon> 08h00 – 23h00</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 FoodExpress. Todos os direitos reservados.</p>
+    <p>Frontend: Vercel · Backend: Railway · DB: Neon PostgreSQL</p>
+  </div>
+</footer>
