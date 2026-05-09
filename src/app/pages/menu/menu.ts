@@ -1,7 +1,6 @@
 import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar';
 import { CartService, Product } from '../../services/cart.service';
 import { LucideAngularModule } from 'lucide-angular';
@@ -42,7 +41,7 @@ const ALL_PRODUCTS: Product[] = [
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent, LucideAngularModule],
+  imports: [CommonModule, FormsModule, NavbarComponent, LucideAngularModule],
   templateUrl: './menu.html',
   styleUrl: './menu.css',
 })
