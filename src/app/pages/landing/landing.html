@@ -9,23 +9,20 @@
   </div>
   <div class="hero-container">
     <div class="hero-content">
-      <div class="hero-badge">🔥 Delivery disponível agora</div>
+      <div class="hero-badge">🔥 {{ i18n.t('heroBadge') }}</div>
       <h1 class="hero-title">
-        A comida que<br>
-        <span class="hero-title-accent">você ama,</span><br>
-        na sua porta.
+        {{ i18n.t('heroTitle') }}
       </h1>
       <p class="hero-subtitle">
-        Descubra centenas de pratos deliciosos e receba em casa em menos de 45 minutos.
-        Rápido, fácil e saboroso!
+        {{ i18n.t('heroSubtitle') }}
       </p>
       <div class="hero-actions">
         <a routerLink="/menu" class="btn-hero-primary" id="hero-order-now">
           <lucide-icon name="shopping-cart" [size]="18" style="margin-right: 8px;"></lucide-icon>
-          Pedir Agora
+          {{ i18n.t('quickOrder') }}
         </a>
         <a href="#how-it-works" class="btn-hero-secondary" id="hero-learn-more">
-          Como Funciona
+          {{ i18n.t('howItWorks') }}
         </a>
       </div>
       <div class="hero-trust">
@@ -35,7 +32,7 @@
           <span class="avatar">👩‍🦱</span>
           <span class="avatar">👱</span>
         </div>
-        <p class="trust-text"><strong>+50.000</strong> clientes satisfeitos</p>
+        <p class="trust-text"><strong>+50.000</strong> {{ i18n.t('trustText') }}</p>
       </div>
     </div>
     <div class="hero-visual">
@@ -89,8 +86,8 @@
   <div class="section-container">
     <div class="section-header">
       <span class="section-tag">Categorias</span>
-      <h2 class="section-title">Explore o nosso Cardápio</h2>
-      <p class="section-subtitle">Escolha entre centenas de pratos de diferentes categorias</p>
+      <h2 class="section-title">{{ i18n.t('categoriesTitle') }}</h2>
+      <p class="section-subtitle">{{ i18n.t('categoriesSubtitle') }}</p>
     </div>
     <div class="categories-grid">
       @for (cat of categories; track cat.name) {
@@ -110,9 +107,9 @@
 <section class="section how-section" id="how-it-works">
   <div class="section-container">
     <div class="section-header">
-      <span class="section-tag">Como Funciona</span>
-      <h2 class="section-title">3 passos simples</h2>
-      <p class="section-subtitle">Pedir comida nunca foi tão fácil</p>
+      <span class="section-tag">{{ i18n.t('howItWorks') }}</span>
+      <h2 class="section-title">{{ i18n.t('howTitle') }}</h2>
+      <p class="section-subtitle">{{ i18n.t('howSubtitle') }}</p>
     </div>
     <div class="steps-grid">
       @for (s of steps; track s.step) {
@@ -133,8 +130,8 @@
 <section class="section features-section" id="features">
   <div class="section-container">
     <div class="section-header">
-      <span class="section-tag">Vantagens</span>
-      <h2 class="section-title">Por que escolher o FoodExpress?</h2>
+      <span class="section-tag">{{ i18n.t('features') }}</span>
+      <h2 class="section-title">{{ i18n.t('advantages') }}</h2>
     </div>
     <div class="features-grid">
       @for (f of features; track f.title) {

@@ -1,0 +1,49 @@
+<app-navbar />
+
+<section class="admin-page">
+  <div class="admin-hero">
+    <div>
+      <h1>{{ i18n.t('adminTitle') }}</h1>
+      <p>{{ i18n.t('adminSubtitle') }}</p>
+    </div>
+    <button class="btn-outline" (click)="window.location.reload()">Atualizar</button>
+  </div>
+
+  <div class="admin-grid">
+    @for (stat of stats; track stat.label) {
+      <div class="admin-card">
+        <p class="admin-card-value">{{ stat.value }}</p>
+        <p class="admin-card-label">{{ stat.label }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="recent-orders">
+    <div class="section-header">
+      <h2>Pedidos recentes</h2>
+      <p>Veja os últimos pedidos e o estado atual de cada um.</p>
+    </div>
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Restaurante</th>
+          <th>Cliente</th>
+          <th>Estado</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of recentOrders; track order.id) {
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.restaurant }}</td>
+            <td>{{ order.client }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.total }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

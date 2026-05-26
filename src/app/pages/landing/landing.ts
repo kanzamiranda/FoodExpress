@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar';
 import { LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-landing',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './landing.css',
 })
 export class LandingComponent {
+  constructor(public i18n: I18nService) {}
   categories = [
     { icon: '🍕', name: 'Pizza', count: 24 },
     { icon: '🍔', name: 'Burgers', count: 18 },

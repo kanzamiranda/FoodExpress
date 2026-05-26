@@ -1,0 +1,47 @@
+<app-navbar />
+
+<section class="auth-page">
+  <div class="auth-card">
+    <h1>{{ i18n.t('registerTitle') }}</h1>
+    <p class="auth-subtitle">{{ i18n.t('registerButton') }} e comece a pedir</p>
+
+    <form (ngSubmit)="submit()" class="auth-form">
+      <label>
+        {{ i18n.t('registerName') }}
+        <input type="text" [(ngModel)]="name" name="name" placeholder="João Silva" required />
+      </label>
+
+      <label>
+        {{ i18n.t('loginEmail') }}
+        <input type="email" [(ngModel)]="email" name="email" placeholder="email@exemplo.com" required />
+      </label>
+
+      <label>
+        {{ i18n.t('loginPassword') }}
+        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required />
+      </label>
+
+      <label>
+        {{ i18n.t('registerConfirmPassword') }}
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="••••••••" required />
+      </label>
+
+      @if (error) {
+        <div class="form-error">{{ error }}</div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        @if (loading) {
+          <span>Carregando...</span>
+        } @else {
+          {{ i18n.t('registerButton') }}
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      {{ i18n.t('alreadyAccount') }}
+      <a routerLink="/login">{{ i18n.t('login') }}</a>
+    </p>
+  </div>
+</section>

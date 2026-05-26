@@ -2,6 +2,8 @@ import { Component, Input, signal, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
+import { I18nService } from '../../services/i18n.service';
+import { ThemeService } from '../../services/theme.service';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -17,7 +19,11 @@ export class NavbarComponent {
   scrolled = signal(false);
   mobileOpen = signal(false);
 
-  constructor(public cartService: CartService) {}
+  constructor(
+    public cartService: CartService,
+    public i18n: I18nService,
+    public theme: ThemeService
+  ) {}
 
   @HostListener('window:scroll')
   onScroll() {
@@ -30,5 +36,15 @@ export class NavbarComponent {
 
   closeMobile() {
     this.mobileOpen.set(false);
+  }
+
+  setLanguage(language: string) {
+    this.i18n.setLanguage(language as any);
+  }
+
+  openGoogleTranslate() {
+    if (typeof window !== 'undefined') {
+      window.open(this.i18n.googleTranslateUrl(), '_blank');
+    }
   }
 }

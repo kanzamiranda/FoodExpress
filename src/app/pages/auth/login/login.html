@@ -1,0 +1,41 @@
+<app-navbar />
+
+<section class="auth-page">
+  <div class="auth-card">
+    <h1>{{ i18n.t('loginTitle') }}</h1>
+    <p class="auth-subtitle">{{ i18n.t('loginButton') }} ao FoodExpress</p>
+
+    <form (ngSubmit)="submit()" class="auth-form">
+      <label>
+        {{ i18n.t('loginEmail') }}
+        <input type="email" [(ngModel)]="email" name="email" placeholder="email@exemplo.com" required />
+      </label>
+
+      <label>
+        {{ i18n.t('loginPassword') }}
+        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required />
+      </label>
+
+      <div class="form-row">
+        <a routerLink="/reset-password" class="link-button">{{ i18n.t('forgotPassword') }}</a>
+      </div>
+
+      @if (error) {
+        <div class="form-error">{{ error }}</div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        @if (loading) {
+          <span>Carregando...</span>
+        } @else {
+          {{ i18n.t('loginButton') }}
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      {{ i18n.t('noAccount') }}
+      <a routerLink="/register">{{ i18n.t('register') }}</a>
+    </p>
+  </div>
+</section>

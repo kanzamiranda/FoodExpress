@@ -19,8 +19,8 @@
     <!-- Page Header -->
     <div class="menu-header">
       <div class="menu-header-content">
-        <h1 class="menu-title">🍽️ Cardápio</h1>
-        <p class="menu-subtitle">Descubra os nossos pratos frescos e deliciosos</p>
+        <h1 class="menu-title">{{ i18n.t('menuTitle') }}</h1>
+        <p class="menu-subtitle">{{ i18n.t('menuSubtitle') }}</p>
       </div>
       <!-- Search -->
       <div class="search-wrapper">
@@ -29,7 +29,7 @@
           id="menu-search-input"
           type="text"
           class="search-input"
-          placeholder="Pesquisar pratos..."
+          placeholder="{{ i18n.t('searchPlaceholder') }}"
           [value]="searchQuery()"
           (input)="onSearch($any($event.target).value)"
         />
@@ -53,7 +53,7 @@
 
     <!-- Results count -->
     <div class="results-info">
-      <p>{{ filteredProducts().length }} pratos encontrados
+      <p>{{ filteredProducts().length }} {{ i18n.t('foundItems') }}
         @if (activeCategory() !== 'Todos') { em <strong>{{ activeCategory() }}</strong> }
         @if (searchQuery()) { para "<strong>{{ searchQuery() }}</strong>" }
       </p>
@@ -98,7 +98,7 @@
                     [id]="'add-btn-' + product.id"
                   >
                     <lucide-icon name="plus" [size]="14"></lucide-icon>
-                    Adicionar
+                    {{ i18n.t('add') }}
                   </button>
                 } @else {
                   <div class="qty-control">
@@ -139,8 +139,8 @@
     @if (cartService.items().length === 0) {
       <div class="cart-empty">
         <lucide-icon name="shopping-cart" [size]="52" style="opacity: 0.3;"></lucide-icon>
-        <p>Carrinho vazio</p>
-        <small>Adicione pratos do cardápio!</small>
+        <p>{{ i18n.t('cartEmpty') }}</p>
+        <small>{{ i18n.t('cartEmptySubtitle') }}</small>
       </div>
     } @else {
       <div class="cart-items">
@@ -166,26 +166,26 @@
       <!-- Summary -->
       <div class="cart-summary">
         <div class="summary-row">
-          <span>Subtotal</span>
+          <span>{{ i18n.t('subtotal') }}</span>
           <span>{{ formatPrice(cartService.subtotal()) }}</span>
         </div>
         <div class="summary-row">
-          <span>Taxa de entrega</span>
+          <span>{{ i18n.t('deliveryFee') }}</span>
           <span>{{ formatPrice(cartService.deliveryFee()) }}</span>
         </div>
         <div class="summary-row summary-total">
-          <span>Total</span>
+          <span>{{ i18n.t('total') }}</span>
           <span>{{ formatPrice(cartService.total()) }}</span>
         </div>
       </div>
 
       <button class="checkout-btn" (click)="checkout()" id="checkout-btn">
         <lucide-icon name="check-circle" [size]="18" style="margin-right: 8px; vertical-align: middle;"></lucide-icon>
-        Confirmar Pedido
+        {{ i18n.t('confirmOrder') }}
       </button>
       <button class="clear-btn" (click)="cartService.clearCart()" id="clear-cart-btn">
         <lucide-icon name="trash-2" [size]="14" style="margin-right: 6px; vertical-align: middle;"></lucide-icon>
-        Limpar Carrinho
+        {{ i18n.t('clearCart') }}
       </button>
     }
   </aside>

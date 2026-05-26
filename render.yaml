@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: foodexpress-backend
+    env: php
+    branch: main
+    buildCommand: ''
+    startCommand: php -S 0.0.0.0:10000 -t backend backend/router.php
+    plan: free
+
+  - type: static
+    name: foodexpress-frontend
+    branch: main
+    buildCommand: npm install && npm run build
+    publishPath: dist/FoodExpress
+    plan: free

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../shared/navbar/navbar';
 import { CartService, Product } from '../../services/cart.service';
 import { LucideAngularModule } from 'lucide-angular';
+import { I18nService } from '../../services/i18n.service';
 
 const ALL_PRODUCTS: Product[] = [
   // Pizzas
@@ -46,7 +47,7 @@ const ALL_PRODUCTS: Product[] = [
   styleUrl: './menu.css',
 })
 export class MenuComponent {
-  constructor(public cartService: CartService) {}
+  constructor(public cartService: CartService, public i18n: I18nService) {}
 
   categories = ['Todos', 'Pizza', 'Burgers', 'Massas', 'Saladas', 'Sobremesas', 'Bebidas'];
   categoryIcons: Record<string, string> = {

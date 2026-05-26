@@ -16,14 +16,27 @@
 
     <!-- Desktop Actions -->
     <div class="nav-actions">
+      <button class="theme-btn btn-outline" (click)="theme.toggleTheme()" title="{{ theme.isDark() ? i18n.t('lightMode') : i18n.t('darkMode') }}">
+        @if (theme.isDark()) {
+          🌞
+        } @else {
+          🌙
+        }
+      </button>
+      <select class="lang-select" [value]="i18n.language()" (change)="setLanguage($any($event.target).value)">
+        @for (option of i18n.languages; track option.code) {
+          <option value="{{ option.code }}">{{ option.label }}</option>
+        }
+      </select>
+      <button class="btn-outline" type="button" (click)="openGoogleTranslate()">{{ i18n.t('googleTranslate') }}</button>
       <a routerLink="/menu" class="cart-btn" id="navbar-cart-btn">
         <lucide-icon name="shopping-cart" [size]="20"></lucide-icon>
         @if (cartService.totalItems() > 0) {
           <span class="cart-badge">{{ cartService.totalItems() }}</span>
         }
       </a>
-      <button class="btn-outline" id="navbar-login-btn">Entrar</button>
-      <button class="btn-primary" id="navbar-register-btn">Registar</button>
+      <a routerLink="/login" class="btn-outline" id="navbar-login-btn">{{ i18n.t('login') }}</a>
+      <a routerLink="/register" class="btn-primary" id="navbar-register-btn">{{ i18n.t('register') }}</a>
     </div>
 
     <!-- Mobile Toggle -->
@@ -39,13 +52,16 @@
   <!-- Mobile Menu -->
   @if (mobileOpen()) {
     <div class="mobile-menu">
-      <a routerLink="/" class="mobile-link" (click)="closeMobile()">🏠 Início</a>
-      <a routerLink="/menu" class="mobile-link" (click)="closeMobile()">🍽️ Cardápio</a>
-      <a href="#features" class="mobile-link" (click)="closeMobile()">⭐ Funcionalidades</a>
-      <a href="#contact" class="mobile-link" (click)="closeMobile()">📞 Contacto</a>
+      <a routerLink="/" class="mobile-link" (click)="closeMobile()">🏠 {{ i18n.t('home') }}</a>
+      <a routerLink="/menu" class="mobile-link" (click)="closeMobile()">🍽️ {{ i18n.t('menu') }}</a>
+      <a href="#features" class="mobile-link" (click)="closeMobile()">⭐ {{ i18n.t('features') }}</a>
+      <a href="#contact" class="mobile-link" (click)="closeMobile()">📞 {{ i18n.t('contact') }}</a>
       <div class="mobile-actions">
-        <button class="btn-outline w-full" (click)="closeMobile()">Entrar</button>
-        <button class="btn-primary w-full" (click)="closeMobile()">Registar</button>
+        <button class="btn-outline w-full" (click)="closeMobile(); window.location.href = '/login'">{{ i18n.t('login') }}</button>
+        <button class="btn-primary w-full" (click)="closeMobile(); window.location.href = '/register'">{{ i18n.t('register') }}</button>
+      </div>
+      <div class="mobile-actions">
+        <button class="btn-outline w-full" type="button" (click)="openGoogleTranslate()">{{ i18n.t('googleTranslate') }}</button>
       </div>
     </div>
   }
