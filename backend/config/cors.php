@@ -4,17 +4,23 @@
 // ============================================================
 declare(strict_types=1);
 
-$allowed = [
+// Origens permitidas — apenas Render (+ localhost para desenvolvimento local)
+$frontendUrl = getenv('FRONTEND_URL') ?: '';
+
+$allowed = array_filter([
     'http://localhost:4200',
-    'https://foodexpress.vercel.app',
-];
+    'http://localhost:4000',
+    $frontendUrl ?: null,           // URL do frontend no Render (via env var)
+    'https://foodexpress-frontend.onrender.com',  // fallback explícito
+]);
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
 if (in_array($origin, $allowed, true)) {
     header("Access-Control-Allow-Origin: $origin");
 } else {
-    header('Access-Control-Allow-Origin: ' . $allowed[0]);
+    // Por defeito permite o localhost em dev
+    header('Access-Control-Allow-Origin: http://localhost:4200');
 }
 
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');

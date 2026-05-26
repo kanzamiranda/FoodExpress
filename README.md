@@ -1,59 +1,114 @@
-# FoodExpress
+# 🍔 FoodExpress
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
+Plataforma web moderna de delivery de comida — Angular SSR + PHP REST API, hospedada exclusivamente no **Render**.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🏗️ Stack Tecnológico
+
+| Camada | Tecnologia |
+|---|---|
+| **Frontend** | Angular 21 (SSR) + Tailwind CSS |
+| **Backend** | PHP 8.x — REST API pura |
+| **Base de Dados** | PostgreSQL (Neon) |
+| **Email** | Brevo Transactional API v3 |
+| **Hosting** | Render (frontend + backend) |
+
+---
+
+## 🚀 Deploy no Render
+
+O projeto usa `render.yaml` na raiz para configurar ambos os serviços:
+
+| Serviço | Tipo | Porta |
+|---|---|---|
+| `foodexpress-api` | Web Service (PHP) | 10000 |
+| `foodexpress-frontend` | Web Service (Node.js SSR) | 4000 |
+
+### Variáveis de Ambiente — Render Dashboard
+
+Configura manualmente no painel do Render em cada serviço:
+
+**`foodexpress-api` (Backend PHP):**
+```
+DB_HOST=<neon_host>
+DB_NAME=<neon_db>
+DB_USER=<neon_user>
+DB_PASSWORD=<neon_password>
+JWT_SECRET=<segredo_forte>
+BREVO_API_KEY=<chave_api_brevo>
+BREVO_FROM_EMAIL=noreply@seudominio.com
+FRONTEND_URL=https://foodexpress-frontend.onrender.com
+```
+
+**`foodexpress-frontend` (Node.js SSR):**
+```
+PORT=4000
+NODE_ENV=production
+```
+
+---
+
+## 💻 Desenvolvimento Local
+
+### 1. Backend PHP
 
 ```bash
+cd backend
+php -S localhost:10000 ../backend/router.php
+```
+
+### 2. Frontend Angular
+
+```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abre `http://localhost:4200` no browser.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📧 Email (Brevo)
 
-```bash
-ng generate component component-name
+O sistema envia emails transacionais via **Brevo API v3**:
+
+- ✅ **Boas-vindas** — após registo de novo utilizador
+- 🔑 **Recuperação de senha** — link de reset com validade de 1h
+- 📦 **Confirmação de pedido** — resumo e link de rastreio
+
+Para configurar:
+1. Cria conta em [brevo.com](https://brevo.com)
+2. Vai a **Settings → API Keys** e cria uma chave
+3. Verifica o email remetente em **Senders & IPs**
+4. Adiciona `BREVO_API_KEY` e `BREVO_FROM_EMAIL` nas env vars do Render
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+FoodExpress/
+├── backend/              # PHP REST API
+│   ├── api/              # Endpoints (auth, products, orders, ...)
+│   ├── config/           # CORS, Database
+│   ├── controllers/      # Lógica de negócio
+│   ├── helpers/          # JWT, Response, Env loader
+│   ├── services/         # EmailService (Brevo)
+│   └── index.php         # Entry point
+├── src/                  # Angular frontend
+│   ├── app/              # Componentes, páginas, serviços
+│   ├── environments/     # Config prod/dev
+│   └── server.ts         # SSR Express server
+└── render.yaml           # Configuração de deploy Render
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🔒 Segurança
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Autenticação JWT (stateless)
+- Senhas com bcrypt (cost 12)
+- CORS restrito ao domínio do Render
+- HTTPS obrigatório em produção
+- Variáveis sensíveis via env vars (nunca no código)

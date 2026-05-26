@@ -26,4 +26,10 @@ export class AdminComponent {
   ];
 
   constructor(public i18n: I18nService) {}
+
+  reload() {
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
+  }
 }

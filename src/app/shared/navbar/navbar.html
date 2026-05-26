@@ -57,8 +57,8 @@
       <a href="#features" class="mobile-link" (click)="closeMobile()">⭐ {{ i18n.t('features') }}</a>
       <a href="#contact" class="mobile-link" (click)="closeMobile()">📞 {{ i18n.t('contact') }}</a>
       <div class="mobile-actions">
-        <button class="btn-outline w-full" (click)="closeMobile(); window.location.href = '/login'">{{ i18n.t('login') }}</button>
-        <button class="btn-primary w-full" (click)="closeMobile(); window.location.href = '/register'">{{ i18n.t('register') }}</button>
+        <button class="btn-outline w-full" (click)="navigate('/login')">{{ i18n.t('login') }}</button>
+        <button class="btn-primary w-full" (click)="navigate('/register')">{{ i18n.t('register') }}</button>
       </div>
       <div class="mobile-actions">
         <button class="btn-outline w-full" type="button" (click)="openGoogleTranslate()">{{ i18n.t('googleTranslate') }}</button>

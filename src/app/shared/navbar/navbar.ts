@@ -1,5 +1,5 @@
 import { Component, Input, signal, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { I18nService } from '../../services/i18n.service';
@@ -22,8 +22,14 @@ export class NavbarComponent {
   constructor(
     public cartService: CartService,
     public i18n: I18nService,
-    public theme: ThemeService
+    public theme: ThemeService,
+    private router: Router
   ) {}
+
+  navigate(path: string) {
+    this.closeMobile();
+    this.router.navigate([path]);
+  }
 
   @HostListener('window:scroll')
   onScroll() {
