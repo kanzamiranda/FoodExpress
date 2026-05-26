@@ -13,7 +13,7 @@ if (empty($email) || empty($password)) {
     sendError(400, 'E-mail e senha são obrigatórios');
 }
 
-$stmt = $db->prepare("SELECT id, name, email, password, role FROM users WHERE email = ? AND is_active = TRUE");
+$stmt = $db->prepare("SELECT id, nome as name, email, senha as password, tipo as role FROM utilizadores WHERE email = ? AND ativo = TRUE");
 $stmt->execute([$email]);
 $user = $stmt->fetch();
 
@@ -23,15 +23,7 @@ if (!$user || !password_verify($password, $user['password'])) {
 
 // Generate tokens
 $accessToken = createAccessToken($user);
-$refreshToken = createRefreshToken((int)$user['id']);
-
-// Save refresh token
-$stmt = $db->prepare("INSERT INTO refresh_tokens (user_id, token, expires_at) VALUES (?, ?, ?)");
-$stmt->execute([
-    $user['id'],
-    $refreshToken,
-    date('Y-m-d H:i:s', time() + JWT_REFRESH_EXP)
-]);
+$refreshToken = createRefreshToken($user['id']);
 
 sendSuccess([
     'user' => [

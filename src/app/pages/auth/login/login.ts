@@ -1,37 +1,60 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../../shared/navbar/navbar';
 import { I18nService } from '../../../services/i18n.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, NavbarComponent],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class LoginComponent {
-  email = '';
-  password = '';
+  loginForm: FormGroup;
   error = '';
   loading = false;
 
-  constructor(public i18n: I18nService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    public i18n: I18nService,
+    private auth: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
   submit() {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.error = this.i18n.t('fillAllFields');
+      return;
+    }
+
     this.error = '';
     this.loading = true;
 
-    setTimeout(() => {
-      this.loading = false;
-      if (!this.email || !this.password) {
-        this.error = this.i18n.t('fillAllFields');
-        return;
-      }
+    const { email, password } = this.loginForm.value;
 
-      this.router.navigate(['/menu']);
-    }, 700);
+    this.auth.login(email, password).subscribe({
+      next: (res) => {
+        this.loading = false;
+        if (res.success) {
+          this.router.navigate(['/menu']);
+        } else {
+          this.error = res.message || 'Falha ao entrar';
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || 'E-mail ou senha incorretos.';
+      }
+    });
   }
 }

@@ -5,26 +5,38 @@
     <h1>{{ i18n.t('registerTitle') }}</h1>
     <p class="auth-subtitle">{{ i18n.t('registerButton') }} e comece a pedir</p>
 
-    <form (ngSubmit)="submit()" class="auth-form">
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" class="auth-form">
       <label>
         {{ i18n.t('registerName') }}
-        <input type="text" [(ngModel)]="name" name="name" placeholder="João Silva" required />
+        <input type="text" formControlName="name" placeholder="João Silva" [class.input-error]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" required />
       </label>
+      @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+        <span class="validation-message">O nome deve ter pelo menos 3 caracteres.</span>
+      }
 
       <label>
         {{ i18n.t('loginEmail') }}
-        <input type="email" [(ngModel)]="email" name="email" placeholder="email@exemplo.com" required />
+        <input type="email" formControlName="email" placeholder="email@exemplo.com" [class.input-error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" required />
       </label>
+      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+        <span class="validation-message">Por favor, insira um e-mail válido.</span>
+      }
 
       <label>
         {{ i18n.t('loginPassword') }}
-        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required />
+        <input type="password" formControlName="password" placeholder="••••••••" [class.input-error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" required />
       </label>
+      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+        <span class="validation-message">A senha deve ter pelo menos 8 caracteres.</span>
+      }
 
       <label>
         {{ i18n.t('registerConfirmPassword') }}
-        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="••••••••" required />
+        <input type="password" formControlName="confirmPassword" placeholder="••••••••" [class.input-error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" required />
       </label>
+      @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+        <span class="validation-message">Por favor, confirme a sua senha.</span>
+      }
 
       @if (error) {
         <div class="form-error">{{ error }}</div>

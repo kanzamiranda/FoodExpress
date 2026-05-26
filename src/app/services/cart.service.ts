@@ -1,11 +1,12 @@
 import { Injectable, signal, computed } from '@angular/core';
 
 export interface Product {
-  id: number;
+  id: any;
   name: string;
   description: string;
   price: number;
   emoji: string;
+  image?: string;
   category: string;
   badge?: string;
   rating: number;
@@ -31,7 +32,7 @@ export class CartService {
     this._items().reduce((sum, i) => sum + i.product.price * i.quantity, 0)
   );
 
-  readonly deliveryFee = computed(() => (this.subtotal() > 0 ? 2.5 : 0));
+  readonly deliveryFee = computed(() => (this.subtotal() > 0 ? 2500 : 0)); // Taxa de entrega de 2500 KZ
 
   readonly total = computed(() => this.subtotal() + this.deliveryFee());
 
@@ -49,7 +50,7 @@ export class CartService {
     });
   }
 
-  removeOne(productId: number) {
+  removeOne(productId: any) {
     this._items.update(items => {
       const existing = items.find(i => i.product.id === productId);
       if (existing && existing.quantity === 1) {
@@ -63,11 +64,11 @@ export class CartService {
     });
   }
 
-  removeItem(productId: number) {
+  removeItem(productId: any) {
     this._items.update(items => items.filter(i => i.product.id !== productId));
   }
 
-  getQuantity(productId: number): number {
+  getQuantity(productId: any): number {
     return this._items().find(i => i.product.id === productId)?.quantity ?? 0;
   }
 

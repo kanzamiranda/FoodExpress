@@ -207,3 +207,76 @@ VALUES (
     crypt('Admin@2024!', gen_salt('bf')),
     'admin'
 );
+
+-- ============================================================
+-- DADOS DE SEEDING: Restaurante e Cardápio Completo (Premium)
+-- ============================================================
+
+-- 1. Restaurante Premium Padrão
+INSERT INTO restaurantes (id, utilizador_id, nome, descricao, endereco, cidade, telefone, email, imagem, banner, categoria, taxa_entrega, tempo_entrega, avaliacao_media, total_avaliacoes, ativo, aberto)
+VALUES (
+    'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    (SELECT id FROM utilizadores WHERE email = 'admin@foodexpress.com' LIMIT 1),
+    'FoodExpress Premium',
+    'Os melhores pratos de Luanda, confecionados com ingredientes frescos e entregues em tempo recorde à sua porta.',
+    'Avenida Comandante Gika, 150',
+    'Luanda',
+    '+244 923 000 111',
+    'premium@foodexpress.ao',
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&auto=format&fit=crop&q=80',
+    'Internacional',
+    800.00,
+    30,
+    4.9,
+    145,
+    TRUE,
+    TRUE
+);
+
+-- 2. Categorias de Pratos
+INSERT INTO categorias_pratos (id, restaurante_id, nome, ordem) VALUES
+('b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Pizza', 1),
+('b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Burgers', 2),
+('b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Massas', 3),
+('b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a04', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Saladas', 4),
+('b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a05', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Sobremesas', 5),
+('b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Bebidas', 6);
+
+-- 3. Pratos (24 pratos deliciosos com imagens do Unsplash)
+INSERT INTO pratos (restaurante_id, categoria_id, nome, descricao, preco, imagem, disponivel, destaque) VALUES
+-- PIZZAS (Categoria 01)
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'Pizza Margherita', 'Molho de tomate, mozzarella fresca e manjericão', 4500.00, 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'Pizza Pepperoni', 'Pepperoni fatiado, queijo mozzarella e orégãos', 5500.00, 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'Pizza Vegetariana', 'Pimentos, cogumelos, azeitonas e queijo', 5000.00, 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'Pizza 4 Queijos', 'Mozzarella, gorgonzola, parmesão e gouda', 6000.00, 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'Pizza Frango', 'Frango grelhado, pimentos e creme de alho', 5800.00, 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+
+-- BURGERS (Categoria 02)
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02', 'Classic Burger', 'Carne 180g, alface, tomate, queijo cheddar', 3500.00, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02', 'BBQ Burger', 'Dupla carne, bacon crocante e molho BBQ', 4800.00, 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02', 'Frango Crispy', 'Frango crocante, coleslaw e pickles', 4200.00, 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02', 'Double Smash', 'Dois smash burgers com queijo americano', 5500.00, 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+
+-- MASSAS (Categoria 03)
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03', 'Pasta Carbonara', 'Spaghetti, pancetta, ovo e parmesão', 4000.00, 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03', 'Bolonhesa Clássica', 'Molho bolonhesa lento com tagliatelle', 3800.00, 'https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03', 'Penne ao Pesto', 'Penne com pesto de manjericão e pinhões', 3900.00, 'https://images.unsplash.com/photo-1484156818044-c040038b0719?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03', 'Lasanha de Carne', 'Lasanha italiana com carne e béchamel', 4500.00, 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+
+-- SALADAS (Categoria 04)
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a04', 'Salada Caesar', 'Alface romana, croutons, parmesão e molho Caesar', 2800.00, 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a04', 'Salada Grega', 'Tomate, pepino, azeitonas, feta e orégãos', 2900.00, 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a04', 'Salada Tropical', 'Frango, manga, abacate e vinagrete de lima', 3200.00, 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+
+-- SOBREMESAS (Categoria 05)
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a05', 'Cheesecake', 'Cheesecake de frutos vermelhos cremoso', 2000.00, 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a05', 'Brownie Quente', 'Brownie de chocolate com gelado de baunilha', 2200.00, 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80', TRUE, TRUE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a05', 'Gelado Artesanal', 'Seleção de 3 bolas de gelado artesanal', 1800.00, 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a05', 'Pudim Português', 'Pudim flan tradicional com caramelo', 1500.00, 'https://images.unsplash.com/photo-1528975604071-b4dc52a2d18c?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+
+-- BEBIDAS (Categoria 06)
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06', 'Sumo Natural', 'Sumo de laranja espremido na hora', 1200.00, 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06', 'Coca-Cola', 'Coca-Cola gelada 33cl', 800.00, 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06', 'Água com Gás', 'Água mineral com gás 50cl', 600.00, 'https://images.unsplash.com/photo-1548813730-e841804a1a08?w=600&auto=format&fit=crop&q=80', TRUE, FALSE),
+('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06', 'Smoothie Frutas', 'Manga, morango e banana batidos', 1600.00, 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&auto=format&fit=crop&q=80', TRUE, TRUE);

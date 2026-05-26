@@ -38,7 +38,7 @@
 
     <!-- Category Filter -->
     <div class="category-tabs" id="menu-category-tabs">
-      @for (cat of categories; track cat) {
+      @for (cat of categories(); track cat) {
         <button
           class="category-tab"
           [class.active]="activeCategory() === cat"
@@ -65,9 +65,9 @@
         @for (product of filteredProducts(); track product.id) {
           <div class="product-card" [class.just-added]="addedId() === product.id" [id]="'product-' + product.id">
 
-            <!-- Emoji Visual -->
+            <!-- Image Visual -->
             <div class="product-visual">
-              <span class="product-emoji">{{ product.emoji }}</span>
+              <img [src]="product.image" [alt]="product.name" class="product-image" />
               @if (product.badge) {
                 <span class="product-badge" [style.background]="badgeColor(product.badge)">
                   {{ product.badge }}
@@ -146,7 +146,7 @@
       <div class="cart-items">
         @for (item of cartService.items(); track item.product.id) {
           <div class="cart-item" [id]="'cart-item-' + item.product.id">
-            <span class="cart-item-emoji">{{ item.product.emoji }}</span>
+            <img [src]="item.product.image" [alt]="item.product.name" class="cart-item-img" />
             <div class="cart-item-info">
               <p class="cart-item-name">{{ item.product.name }}</p>
               <p class="cart-item-price">{{ formatPrice(item.product.price) }}</p>

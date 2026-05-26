@@ -37,31 +37,31 @@
     </div>
     <div class="hero-visual">
       <div class="hero-card main-card">
-        <span class="hero-card-emoji">🍕</span>
+        <img [src]="heroCards.main.image" alt="Pizza Margherita" class="hero-card-img" />
         <div class="hero-card-info">
-          <p class="hero-card-name">Pizza Margherita</p>
-          <p class="hero-card-price">€12,50</p>
+          <p class="hero-card-name">{{ heroCards.main.name }}</p>
+          <p class="hero-card-price">{{ heroCards.main.price }}</p>
         </div>
-        <span class="hero-card-rating">⭐ 4.9</span>
+        <span class="hero-card-rating">⭐ {{ heroCards.main.rating }}</span>
       </div>
       <div class="hero-card side-card card-left">
-        <span>🍔</span>
+        <img [src]="heroCards.left.image" alt="Classic Burger" class="hero-side-img" />
         <div>
-          <p>Classic Burger</p>
-          <p>€9,90</p>
+          <p>{{ heroCards.left.name }}</p>
+          <p>{{ heroCards.left.price }}</p>
         </div>
       </div>
       <div class="hero-card side-card card-right">
-        <span>🍜</span>
+        <img [src]="heroCards.right.image" alt="Pasta Carbonara" class="hero-side-img" />
         <div>
-          <p>Pasta Carbonara</p>
-          <p>€11,00</p>
+          <p>{{ heroCards.right.name }}</p>
+          <p>{{ heroCards.right.price }}</p>
         </div>
       </div>
       <div class="delivery-badge">
         <span>🛵</span>
         <div>
-          <p class="badge-label">Entrega em</p>
+          <p class="badge-label">{{ i18n.t('deliveryIn') }}</p>
           <p class="badge-time">30 min</p>
         </div>
       </div>
@@ -85,18 +85,21 @@
 <section class="section categories-section" id="categories">
   <div class="section-container">
     <div class="section-header">
-      <span class="section-tag">Categorias</span>
+      <span class="section-tag">{{ i18n.t('categories') }}</span>
       <h2 class="section-title">{{ i18n.t('categoriesTitle') }}</h2>
       <p class="section-subtitle">{{ i18n.t('categoriesSubtitle') }}</p>
     </div>
     <div class="categories-grid">
-      @for (cat of categories; track cat.name) {
+      @for (cat of categories(); track cat.name) {
         <a routerLink="/menu" class="category-card" [id]="'cat-' + cat.name.toLowerCase()">
-          <div class="cat-icon-wrap">
-            <span class="cat-icon">{{ cat.icon }}</span>
+          <div class="cat-img-wrap">
+            <img [src]="cat.image" [alt]="cat.name" class="cat-image" loading="lazy" />
+            <div class="cat-img-overlay">
+              <span class="cat-emoji">{{ cat.icon }}</span>
+            </div>
           </div>
           <p class="cat-name">{{ cat.name }}</p>
-          <p class="cat-count">{{ cat.count }} pratos</p>
+          <p class="cat-count">{{ cat.count }} {{ i18n.t('dishesLabel') }}</p>
         </a>
       }
     </div>
@@ -151,8 +154,8 @@
 <section class="section testimonials-section">
   <div class="section-container">
     <div class="section-header">
-      <span class="section-tag">Testemunhos</span>
-      <h2 class="section-title">O que dizem os nossos clientes</h2>
+      <span class="section-tag">{{ i18n.t('testimonials') }}</span>
+      <h2 class="section-title">{{ i18n.t('testimonialsTitle') }}</h2>
     </div>
     <div class="testimonials-grid">
       @for (t of testimonials; track t.name) {
@@ -180,11 +183,11 @@
 <section class="cta-section">
   <div class="cta-container">
     <div class="cta-content">
-      <h2 class="cta-title">Pronto para pedir?</h2>
-      <p class="cta-subtitle">Registe-se agora e ganhe 15% de desconto na sua primeira encomenda!</p>
+      <h2 class="cta-title">{{ i18n.t('ctaTitle') }}</h2>
+      <p class="cta-subtitle">{{ i18n.t('ctaSubtitle') }}</p>
       <div class="cta-actions">
-        <a routerLink="/menu" class="btn-cta-primary" id="cta-menu-btn">Ver Cardápio</a>
-        <button class="btn-cta-secondary" id="cta-register-btn">Criar Conta Grátis</button>
+        <a routerLink="/menu" class="btn-cta-primary" id="cta-menu-btn">{{ i18n.t('viewMenu') }}</a>
+        <button class="btn-cta-secondary" id="cta-register-btn" routerLink="/register">{{ i18n.t('createFreeAccount') }}</button>
       </div>
     </div>
     <div class="cta-emoji-cloud">
@@ -199,7 +202,7 @@
   <div class="footer-container">
     <div class="footer-brand">
       <div class="footer-logo">🍔 Food<span>Express</span></div>
-      <p class="footer-tagline">A sua plataforma de delivery favorita. Rápido, fácil e delicioso.</p>
+      <p class="footer-tagline">{{ i18n.t('footerTagline') }}</p>
       <div class="footer-social">
         <a href="#" class="social-link"><lucide-icon name="facebook" [size]="20"></lucide-icon></a>
         <a href="#" class="social-link"><lucide-icon name="instagram" [size]="20"></lucide-icon></a>
@@ -207,28 +210,28 @@
       </div>
     </div>
     <div class="footer-links-group">
-      <h4>Plataforma</h4>
-      <a routerLink="/menu">Cardápio</a>
-      <a href="#">Como Funciona</a>
-      <a href="#">Promoções</a>
-      <a href="#">App Mobile</a>
+      <h4>{{ i18n.t('platform') }}</h4>
+      <a routerLink="/menu">{{ i18n.t('menu') }}</a>
+      <a href="#how-it-works">{{ i18n.t('howItWorks') }}</a>
+      <a href="#">{{ i18n.t('promotions') }}</a>
+      <a href="#">{{ i18n.t('mobileApp') }}</a>
     </div>
     <div class="footer-links-group">
-      <h4>Suporte</h4>
-      <a href="#">Central de Ajuda</a>
-      <a href="#">Contacto</a>
-      <a href="#">Reclamações</a>
-      <a href="#">Política de Privacidade</a>
+      <h4>{{ i18n.t('support') }}</h4>
+      <a href="#">{{ i18n.t('helpCenter') }}</a>
+      <a href="#">{{ i18n.t('contact') }}</a>
+      <a href="#">{{ i18n.t('complaints') }}</a>
+      <a href="#">{{ i18n.t('privacyPolicy') }}</a>
     </div>
     <div class="footer-links-group">
-      <h4>Contacto</h4>
-      <p><lucide-icon name="mail" [size]="14" style="margin-right: 8px;"></lucide-icon> suporte&#64;foodexpress.pt</p>
-      <p><lucide-icon name="phone" [size]="14" style="margin-right: 8px;"></lucide-icon> +351 210 000 000</p>
-      <p><lucide-icon name="clock" [size]="14" style="margin-right: 8px;"></lucide-icon> 08h00 – 23h00</p>
+      <h4>{{ i18n.t('contact') }}</h4>
+      <p><lucide-icon name="mail" [size]="14" style="margin-right: 8px;"></lucide-icon> suporte&#64;foodexpress.ao</p>
+      <p><lucide-icon name="phone" [size]="14" style="margin-right: 8px;"></lucide-icon> +244 923 000 000</p>
+      <p><lucide-icon name="clock" [size]="14" style="margin-right: 8px;"></lucide-icon> {{ i18n.t('openingHours') }}</p>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 FoodExpress. Todos os direitos reservados.</p>
-    <p>Frontend: Vercel · Backend: Railway · DB: Neon PostgreSQL</p>
+    <p>© 2026 FoodExpress. {{ i18n.t('allRightsReserved') }}</p>
+    <p>{{ i18n.t('hostedOn') }}</p>
   </div>
 </footer>

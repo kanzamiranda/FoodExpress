@@ -5,16 +5,22 @@
     <h1>{{ i18n.t('loginTitle') }}</h1>
     <p class="auth-subtitle">{{ i18n.t('loginButton') }} ao FoodExpress</p>
 
-    <form (ngSubmit)="submit()" class="auth-form">
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" class="auth-form">
       <label>
         {{ i18n.t('loginEmail') }}
-        <input type="email" [(ngModel)]="email" name="email" placeholder="email@exemplo.com" required />
+        <input type="email" formControlName="email" placeholder="email@exemplo.com" [class.input-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" required />
       </label>
+      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+        <span class="validation-message">Por favor, insira um e-mail válido.</span>
+      }
 
       <label>
         {{ i18n.t('loginPassword') }}
-        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required />
+        <input type="password" formControlName="password" placeholder="••••••••" [class.input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" required />
       </label>
+      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+        <span class="validation-message">A senha deve ter pelo menos 6 caracteres.</span>
+      }
 
       <div class="form-row">
         <a routerLink="/reset-password" class="link-button">{{ i18n.t('forgotPassword') }}</a>

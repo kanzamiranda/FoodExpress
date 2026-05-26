@@ -48,7 +48,7 @@ function createAccessToken(array $user): string
 }
 
 // --- Create Refresh Token ---
-function createRefreshToken(int $userId): string
+function createRefreshToken($userId): string
 {
     return jwtEncode([
         'sub'  => $userId,

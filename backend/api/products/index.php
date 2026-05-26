@@ -4,20 +4,41 @@ declare(strict_types=1);
 requireMethod('GET');
 
 $db = getDB();
-$categoryId = isset($_GET['category_id']) ? (int)$_GET['category_id'] : null;
+$categoryName = isset($_GET['category']) ? trim($_GET['category']) : null;
 
-$query = "SELECT p.*, c.name as category_name 
-          FROM products p 
-          JOIN categories c ON p.category_id = c.id 
-          WHERE p.is_available = TRUE";
+$query = "SELECT 
+            p.id, 
+            p.nome as name, 
+            p.descricao as description, 
+            p.preco::float as price, 
+            p.imagem as image, 
+            c.nome as category,
+            CASE 
+                WHEN p.destaque = TRUE THEN 'Popular' 
+                ELSE NULL 
+            END as badge,
+            4.8 as rating,
+            '25 min' as \"prepTime\",
+            CASE c.nome
+                WHEN 'Pizza' THEN '🍕'
+                WHEN 'Burgers' THEN '🍔'
+                WHEN 'Massas' THEN '🍝'
+                WHEN 'Saladas' THEN '🥗'
+                WHEN 'Sobremesas' THEN '🍰'
+                WHEN 'Bebidas' THEN '🥤'
+                ELSE '🍽️'
+            END as emoji
+          FROM pratos p 
+          JOIN categorias_pratos c ON p.categoria_id = c.id 
+          WHERE p.disponivel = TRUE";
 
 $params = [];
-if ($categoryId) {
-    $query .= " AND p.category_id = ?";
-    $params[] = $categoryId;
+if ($categoryName && $categoryName !== 'Todos') {
+    $query .= " AND c.nome = ?";
+    $params[] = $categoryName;
 }
 
-$query .= " ORDER BY p.category_id ASC, p.name ASC";
+$query .= " ORDER BY c.ordem ASC, p.nome ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute($params);
