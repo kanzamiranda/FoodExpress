@@ -2,14 +2,14 @@
 
 <!-- Checkout Success Overlay -->
 @if (checkoutDone()) {
-  <div class="checkout-overlay">
-    <div class="checkout-success">
-      <div class="success-icon">🎉</div>
-      <h2>Pedido Confirmado!</h2>
-      <p>O seu pedido está a ser preparado. Entrega em 30-45 minutos!</p>
-      <div class="success-track">🛵 A caminho...</div>
-    </div>
+<div class="checkout-overlay">
+  <div class="checkout-success">
+    <div class="success-icon">🎉</div>
+    <h2>Pedido Confirmado!</h2>
+    <p>O seu pedido está a ser preparado. Entrega em 30-45 minutos!</p>
+    <div class="success-track">🛵 A caminho...</div>
   </div>
+</div>
 }
 
 <div class="menu-layout" [class.cart-is-open]="cartOpen()">
@@ -25,29 +25,19 @@
       <!-- Search -->
       <div class="search-wrapper">
         <lucide-icon name="search" [size]="18" class="search-icon"></lucide-icon>
-        <input
-          id="menu-search-input"
-          type="text"
-          class="search-input"
-          placeholder="{{ i18n.t('searchPlaceholder') }}"
-          [value]="searchQuery()"
-          (input)="onSearch($any($event.target).value)"
-        />
+        <input id="menu-search-input" type="text" class="search-input" placeholder="{{ i18n.t('searchPlaceholder') }}"
+          [value]="searchQuery()" (input)="onSearch($any($event.target).value)" />
       </div>
     </div>
 
     <!-- Category Filter -->
     <div class="category-tabs" id="menu-category-tabs">
-      @for (cat of categories(); track cat) {
-        <button
-          class="category-tab"
-          [class.active]="activeCategory() === cat"
-          (click)="selectCategory(cat)"
-          [id]="'cat-tab-' + cat.toLowerCase()"
-        >
-          <span>{{ categoryIcons[cat] }}</span>
-          <span>{{ cat }}</span>
-        </button>
+      @for (cat of categories; track cat) {
+      <button class="category-tab" [class.active]="activeCategory() === cat" (click)="selectCategory(cat)"
+        [id]="'cat-tab-' + cat.toLowerCase()">
+        <span>{{ categoryIcons[cat] }}</span>
+        <span>{{ cat }}</span>
+      </button>
       }
     </div>
 
@@ -61,63 +51,64 @@
 
     <!-- Products Grid -->
     @if (filteredProducts().length > 0) {
-      <div class="products-grid" id="menu-products-grid">
-        @for (product of filteredProducts(); track product.id) {
-          <div class="product-card" [class.just-added]="addedId() === product.id" [id]="'product-' + product.id">
+    <div class="products-grid" id="menu-products-grid">
+      @for (product of filteredProducts(); track product.id) {
+      <div class="product-card" [class.just-added]="addedId() === product.id" [id]="'product-' + product.id">
 
-            <!-- Image Visual -->
-            <div class="product-visual">
-              <img [src]="product.image" [alt]="product.name" class="product-image" />
-              @if (product.badge) {
-                <span class="product-badge" [style.background]="badgeColor(product.badge)">
-                  {{ product.badge }}
-                </span>
-              }
-              @if (cartService.getQuantity(product.id) > 0) {
-                <span class="in-cart-indicator"><lucide-icon name="check-circle" [size]="12" style="display:inline-block; vertical-align:middle;"></lucide-icon> {{ cartService.getQuantity(product.id) }} no carrinho</span>
-              }
-            </div>
+        <!-- Image Visual -->
+        <div class="product-visual">
+          <img [src]="product.image" [alt]="product.name" class="product-image" />
+          @if (product.badge) {
+          <span class="product-badge" [style.background]="badgeColor(product.badge)">
+            {{ product.badge }}
+          </span>
+          }
+          @if (cartService.getQuantity(product.id) > 0) {
+          <span class="in-cart-indicator"><lucide-icon name="check-circle" [size]="12"
+              style="display:inline-block; vertical-align:middle;"></lucide-icon> {{ cartService.getQuantity(product.id)
+            }} no carrinho</span>
+          }
+        </div>
 
-            <!-- Info -->
-            <div class="product-info">
-              <div class="product-top">
-                <h3 class="product-name">{{ product.name }}</h3>
-                <div class="product-meta">
-                  <span class="product-rating"><lucide-icon name="star" [size]="10" style="display:inline-block; vertical-align:middle;"></lucide-icon> {{ product.rating }}</span>
-                  <span class="product-time"><lucide-icon name="clock" [size]="10" style="display:inline-block; vertical-align:middle;"></lucide-icon> {{ product.prepTime }}</span>
-                </div>
-              </div>
-              <p class="product-desc">{{ product.description }}</p>
-              <div class="product-footer">
-                <span class="product-price">{{ formatPrice(product.price) }}</span>
-
-                @if (cartService.getQuantity(product.id) === 0) {
-                  <button
-                    class="add-btn"
-                    (click)="addToCart(product)"
-                    [id]="'add-btn-' + product.id"
-                  >
-                    <lucide-icon name="plus" [size]="14"></lucide-icon>
-                    {{ i18n.t('add') }}
-                  </button>
-                } @else {
-                  <div class="qty-control">
-                    <button class="qty-btn" (click)="cartService.removeOne(product.id)" [id]="'qty-minus-' + product.id">−</button>
-                    <span class="qty-value">{{ cartService.getQuantity(product.id) }}</span>
-                    <button class="qty-btn qty-plus" (click)="addToCart(product)" [id]="'qty-plus-' + product.id">+</button>
-                  </div>
-                }
-              </div>
+        <!-- Info -->
+        <div class="product-info">
+          <div class="product-top">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <div class="product-meta">
+              <span class="product-rating"><lucide-icon name="star" [size]="10"
+                  style="display:inline-block; vertical-align:middle;"></lucide-icon> {{ product.rating }}</span>
+              <span class="product-time"><lucide-icon name="clock" [size]="10"
+                  style="display:inline-block; vertical-align:middle;"></lucide-icon> {{ product.prepTime }}</span>
             </div>
           </div>
-        }
+          <p class="product-desc">{{ product.description }}</p>
+          <div class="product-footer">
+            <span class="product-price">{{ formatPrice(product.price) }}</span>
+
+            @if (cartService.getQuantity(product.id) === 0) {
+            <button class="add-btn" (click)="addToCart(product)" [id]="'add-btn-' + product.id">
+              <lucide-icon name="plus" [size]="14"></lucide-icon>
+              {{ i18n.t('add') }}
+            </button>
+            } @else {
+            <div class="qty-control">
+              <button class="qty-btn" (click)="cartService.removeOne(product.id)"
+                [id]="'qty-minus-' + product.id">−</button>
+              <span class="qty-value">{{ cartService.getQuantity(product.id) }}</span>
+              <button class="qty-btn qty-plus" (click)="addToCart(product)" [id]="'qty-plus-' + product.id">+</button>
+            </div>
+            }
+          </div>
+        </div>
       </div>
+      }
+    </div>
     } @else {
-      <div class="empty-state">
-        <lucide-icon name="search" [size]="56" style="margin-bottom: 16px; opacity: 0.5;"></lucide-icon>
-        <p>Nenhum prato encontrado</p>
-        <small>Tente outra pesquisa ou categoria</small>
-      </div>
+    <div class="empty-state">
+      <lucide-icon name="search" [size]="56" style="margin-bottom: 16px; opacity: 0.5;"></lucide-icon>
+      <p>Nenhum prato encontrado</p>
+      <small>Tente outra pesquisa ou categoria</small>
+    </div>
     }
   </main>
 
@@ -128,7 +119,7 @@
         <lucide-icon name="shopping-cart" [size]="20" style="margin-right: 8px;"></lucide-icon>
         Carrinho
         @if (cartService.totalItems() > 0) {
-          <span class="cart-count">{{ cartService.totalItems() }}</span>
+        <span class="cart-count">{{ cartService.totalItems() }}</span>
         }
       </h2>
       <button class="cart-close" (click)="closeCart()" id="cart-close-btn">
@@ -137,66 +128,66 @@
     </div>
 
     @if (cartService.items().length === 0) {
-      <div class="cart-empty">
-        <lucide-icon name="shopping-cart" [size]="52" style="opacity: 0.3;"></lucide-icon>
-        <p>{{ i18n.t('cartEmpty') }}</p>
-        <small>{{ i18n.t('cartEmptySubtitle') }}</small>
-      </div>
+    <div class="cart-empty">
+      <lucide-icon name="shopping-cart" [size]="52" style="opacity: 0.3;"></lucide-icon>
+      <p>{{ i18n.t('cartEmpty') }}</p>
+      <small>{{ i18n.t('cartEmptySubtitle') }}</small>
+    </div>
     } @else {
-      <div class="cart-items">
-        @for (item of cartService.items(); track item.product.id) {
-          <div class="cart-item" [id]="'cart-item-' + item.product.id">
-            <img [src]="item.product.image" [alt]="item.product.name" class="cart-item-img" />
-            <div class="cart-item-info">
-              <p class="cart-item-name">{{ item.product.name }}</p>
-              <p class="cart-item-price">{{ formatPrice(item.product.price) }}</p>
-            </div>
-            <div class="cart-item-qty">
-              <button class="qty-btn" (click)="cartService.removeOne(item.product.id)">−</button>
-              <span>{{ item.quantity }}</span>
-              <button class="qty-btn qty-plus" (click)="cartService.addToCart(item.product)">+</button>
-            </div>
-            <button class="cart-remove" (click)="cartService.removeItem(item.product.id)" title="Remover">
-              <lucide-icon name="trash-2" [size]="16"></lucide-icon>
-            </button>
-          </div>
-        }
+    <div class="cart-items">
+      @for (item of cartService.items(); track item.product.id) {
+      <div class="cart-item" [id]="'cart-item-' + item.product.id">
+        <img [src]="item.product.image" [alt]="item.product.name" class="cart-item-img" />
+        <div class="cart-item-info">
+          <p class="cart-item-name">{{ item.product.name }}</p>
+          <p class="cart-item-price">{{ formatPrice(item.product.price) }}</p>
+        </div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" (click)="cartService.removeOne(item.product.id)">−</button>
+          <span>{{ item.quantity }}</span>
+          <button class="qty-btn qty-plus" (click)="cartService.addToCart(item.product)">+</button>
+        </div>
+        <button class="cart-remove" (click)="cartService.removeItem(item.product.id)" title="Remover">
+          <lucide-icon name="trash-2" [size]="16"></lucide-icon>
+        </button>
       </div>
+      }
+    </div>
 
-      <!-- Summary -->
-      <div class="cart-summary">
-        <div class="summary-row">
-          <span>{{ i18n.t('subtotal') }}</span>
-          <span>{{ formatPrice(cartService.subtotal()) }}</span>
-        </div>
-        <div class="summary-row">
-          <span>{{ i18n.t('deliveryFee') }}</span>
-          <span>{{ formatPrice(cartService.deliveryFee()) }}</span>
-        </div>
-        <div class="summary-row summary-total">
-          <span>{{ i18n.t('total') }}</span>
-          <span>{{ formatPrice(cartService.total()) }}</span>
-        </div>
+    <!-- Summary -->
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>{{ i18n.t('subtotal') }}</span>
+        <span>{{ formatPrice(cartService.subtotal()) }}</span>
       </div>
+      <div class="summary-row">
+        <span>{{ i18n.t('deliveryFee') }}</span>
+        <span>{{ formatPrice(cartService.deliveryFee()) }}</span>
+      </div>
+      <div class="summary-row summary-total">
+        <span>{{ i18n.t('total') }}</span>
+        <span>{{ formatPrice(cartService.total()) }}</span>
+      </div>
+    </div>
 
-      <button class="checkout-btn" (click)="checkout()" id="checkout-btn">
-        <lucide-icon name="check-circle" [size]="18" style="margin-right: 8px; vertical-align: middle;"></lucide-icon>
-        {{ i18n.t('confirmOrder') }}
-      </button>
-      <button class="clear-btn" (click)="cartService.clearCart()" id="clear-cart-btn">
-        <lucide-icon name="trash-2" [size]="14" style="margin-right: 6px; vertical-align: middle;"></lucide-icon>
-        {{ i18n.t('clearCart') }}
-      </button>
+    <button class="checkout-btn" (click)="checkout()" id="checkout-btn">
+      <lucide-icon name="check-circle" [size]="18" style="margin-right: 8px; vertical-align: middle;"></lucide-icon>
+      {{ i18n.t('confirmOrder') }}
+    </button>
+    <button class="clear-btn" (click)="cartService.clearCart()" id="clear-cart-btn">
+      <lucide-icon name="trash-2" [size]="14" style="margin-right: 6px; vertical-align: middle;"></lucide-icon>
+      {{ i18n.t('clearCart') }}
+    </button>
     }
   </aside>
 </div>
 
 <!-- Floating Cart Button (mobile) -->
 @if (cartService.totalItems() > 0 && !cartOpen()) {
-  <button class="float-cart-btn" (click)="toggleCart()" id="float-cart-btn">
-    <lucide-icon name="shopping-cart" [size]="18" style="margin-right: 12px;"></lucide-icon>
-    Ver Carrinho
-    <span class="float-cart-badge">{{ cartService.totalItems() }}</span>
-    <span class="float-cart-price">{{ formatPrice(cartService.total()) }}</span>
-  </button>
+<button class="float-cart-btn" (click)="toggleCart()" id="float-cart-btn">
+  <lucide-icon name="shopping-cart" [size]="18" style="margin-right: 12px;"></lucide-icon>
+  Ver Carrinho
+  <span class="float-cart-badge">{{ cartService.totalItems() }}</span>
+  <span class="float-cart-price">{{ formatPrice(cartService.total()) }}</span>
+</button>
 }
